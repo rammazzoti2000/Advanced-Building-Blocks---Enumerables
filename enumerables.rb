@@ -75,4 +75,58 @@ module Enumerable
 
   puts multiply_els([2, 4, 5])
 
+  # #1. my_each
+  # puts
+  # print [1, 2, 3].my_each { |elem| print (elem + 1).to_s + " "} # => 2 3 4
+  # puts
+
+  # #2. my_each_with_index
+  # puts
+  # print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } # => 1 : 0, 2 : 1, 3 : 2
+  # puts
+
+  # #3. my_select
+  # p [1,2,3,8].my_select { |n| n.even? } # => [2, 8]
+  # p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
+  # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
+  # puts
+
+  # #4. my_all?
+  # p [3, 5, 7, 11].my_all? { |n| n.odd? } # => true
+  # p [-8, -9, -6].my_all? { |n| n < 0 } # => true
+  # p [3, 5, 8, 11].my_all? { |n| n.odd? } # => false
+  # p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+  # puts
+
+  # #5. my_any?
+  # p [7, 10, 3, 5].my_any? { |n| n.even? } # => true
+  # p [7, 10, 4, 5].my_any?() { |n| n.even? } # => true
+  # p ["q", "r", "s", "i"].my_any? { |char| "aeiou".include?(char) } # => true
+  # p [7, 11, 3, 5].my_any? { |n| n.even? } # => false
+  # p ["q", "r", "s", "t"].my_any? { |char| "aeiou".include?(char) } # => false
+  # puts
+
+  # #6. my_none?
+  # p [3, 5, 7, 11].my_none? { |n| n.even? } # => true
+  # p ["sushi", "pizza", "burrito"].my_none? { |word| word[0] == "a" } # => true
+  # p [3, 5, 4, 7, 11].my_none? { |n| n.even? } # => false
+  # p ["asparagus", "sushi", "pizza", "apple", "burrito"].my_none? { |word| word[0] == "a" } # => false
+  # puts
+
+  # #7. my_count
+  # p [1,4,3,8].my_count { |n| n.even? } # => 2
+  # p ["DANIEL", "JIA", "KRITI", "dave"].my_count { |s| s == s.upcase } # => 3
+  # p ["daniel", "jia", "kriti", "dave"].my_count { |s| s == s.upcase } # => 0
+  # puts
+
+  # #8. my_map
+  # p [1,2,3].my_map { |n| 2 * n } # => [2,4,6]
+  # p ["Hey", "Jude"].my_map { |word| word + "?" } # => ["Hey?", "Jude?"]
+  # p [false, true].my_map { |bool| !bool } # => [true, false]
+  # puts
+
+  # #9. my_inject
+  # p [1,2,3,4].my_inject(10) { |accum, elem| accum + elem} # => 20
+  # p [1,2,3,4].my_inject { |accum, elem| accum + elem} # => 10
+
 end
