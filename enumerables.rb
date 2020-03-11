@@ -75,7 +75,7 @@ module Enumerable
     array.my_inject { |mult, elem| mult * elem }
   end
 
-  # puts multiply_els([2, 4, 5])
+  puts multiply_els([2, 4, 5])
 
   # #1. my_each
   # puts
