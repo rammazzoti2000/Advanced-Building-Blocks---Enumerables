@@ -8,6 +8,16 @@ module Enumerable
       yield self[i]
       i += 1
     end
-  end  
+  end
+
+  def my_each_with_index
+    return to_enum(:my_each_with_index) unless block_given?
+
+    i = 0
+    my_each do |elem|
+      yield(elem, i)
+      i += 1
+    end
+  end
 
 end
