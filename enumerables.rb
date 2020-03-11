@@ -38,4 +38,9 @@ module Enumerable
     false
   end
 
+  def my_none?(&prc)
+    my_each { |elem| return false if prc.call(elem) }
+    true
+  end
+
 end
