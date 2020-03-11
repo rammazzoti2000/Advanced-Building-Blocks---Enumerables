@@ -60,4 +60,13 @@ module Enumerable
     mapped
   end
 
+  def my_inject(*args)
+    return to_enum(:my_inject) unless block_given?
+
+    elem = args.size > 0
+    accum = elem ? args[0] : self[0]  
+    self.drop(elem ? 0 : 1).my_each { |elem| accum = yield(accum, elem) }
+    accum
+  end
+
 end
