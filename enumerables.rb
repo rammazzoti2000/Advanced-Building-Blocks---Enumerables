@@ -43,4 +43,11 @@ module Enumerable
     true
   end
 
+  def my_count(&prc)
+    return to_enum(:my_map) unless block_given?
+    count = 0
+    my_each { |elem| count += 1 if prc.call(elem) }
+    count
+  end
+
 end
