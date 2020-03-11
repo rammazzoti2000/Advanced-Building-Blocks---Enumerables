@@ -95,7 +95,7 @@ You can see it working [here](https://repl.it/@AlexandruBangau/enumerables)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/rammazzoti2000/Advanced-Enumerables---Enumerables.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/rammazzoti2000/Advanced-Building-Blocks---Enumerables.svg?style=flat-square
 [contributors-url]: https://github.com/rammazzoti2000/Advanced-Building-Blocks---Enumerables/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/rammazzoti2000/Advanced-Building-Blocks---Enumerables.svg?style=flat-square
 [forks-url]: https://github.com/rammazzoti2000/Advanced-Building-Blocks---Enumerables/network/members
