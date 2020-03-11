@@ -50,4 +50,14 @@ module Enumerable
     count
   end
 
+  def my_map(&prc)
+    return to_enum(:my_map) unless block_given?
+
+    mapped = []
+    my_each do |elem|
+      mapped << prc.call(elem)
+    end
+    mapped
+  end
+
 end
