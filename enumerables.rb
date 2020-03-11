@@ -69,4 +69,10 @@ module Enumerable
     accum
   end
 
+  def multiply_els(array)
+    array.my_inject { |mult, elem| mult * elem }
+  end
+
+  puts multiply_els([2, 4, 5])
+
 end
