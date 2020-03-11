@@ -28,4 +28,9 @@ module Enumerable
     select
   end
 
+  def my_all?(&prc)
+    my_each { |elem| return false if prc.call(elem) == false }
+    true
+  end
+
 end
