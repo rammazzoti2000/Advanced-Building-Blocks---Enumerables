@@ -33,4 +33,9 @@ module Enumerable
     true
   end
 
+  def my_any?(&prc)
+    my_each { |elem| return true if prc.call(elem) }
+    false
+  end
+
 end
