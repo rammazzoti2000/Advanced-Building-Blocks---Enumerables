@@ -45,6 +45,7 @@ module Enumerable
 
   def my_count(&prc)
     return to_enum(:my_map) unless block_given?
+
     count = 0
     my_each { |elem| count += 1 if prc.call(elem) }
     count
@@ -63,9 +64,10 @@ module Enumerable
   def my_inject(*args)
     return to_enum(:my_inject) unless block_given?
 
-    elem = args.size > 0
-    accum = elem ? args[0] : self[0]  
-    self.drop(elem ? 0 : 1).my_each { |elem| accum = yield(accum, elem) }
+    elem = args.size.positive?
+    accum = elem ? args[0] : self[0]
+    self_drop = drop(elem ? 0 : 1)
+    self_drop.my_each { |num| accum = yield(accum, num) }
     accum
   end
 
@@ -73,7 +75,7 @@ module Enumerable
     array.my_inject { |mult, elem| mult * elem }
   end
 
-  puts multiply_els([2, 4, 5])
+  # puts multiply_els([2, 4, 5])
 
   # #1. my_each
   # puts
@@ -128,5 +130,4 @@ module Enumerable
   # #9. my_inject
   # p [1,2,3,4].my_inject(10) { |accum, elem| accum + elem} # => 20
   # p [1,2,3,4].my_inject { |accum, elem| accum + elem} # => 10
-
 end
