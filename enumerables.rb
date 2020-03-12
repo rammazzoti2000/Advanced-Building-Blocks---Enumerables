@@ -81,13 +81,13 @@ module Enumerable
 
   def my_map(prc = nil)
     return enum_for(:map) unless block_given?
-    
+
     mapped = []
-    my_each { |elem| mapped << prc.call(elem) } if block_given? && prc      
+    my_each { |elem| mapped << prc.call(elem) } if block_given? && prc
     my_each { |elem| mapped << yield(elem) } if prc.nil?
     mapped
   end
-  
+
   def my_inject(memo = nil, sym = nil, &prc)
     memo = memo.to_sym if memo.is_a?(String) && !sym && !prc
 
