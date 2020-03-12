@@ -28,8 +28,20 @@ module Enumerable
     select
   end
 
-  def my_all?(&prc)
-    my_each { |elem| return false if prc.call(elem) == false }
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def my_all?(arg = nil, &prc)
+    return true if !block_given? && arg.nil? && include?(nil) == false && include?(false) == false
+    return false unless block_given? || !arg.nil?
+
+    if block_given?
+      my_each { |elem| return false if prc.call(elem) == false }
+    elsif arg.class == Regexp
+      my_each { |elem| return false if arg.match(elem).nil? }
+    elsif arg.class <= Numeric || arg.class <= String
+      my_each { |elem| return false if elem != arg }
+    else
+      my_each { |elem| return false if (elem.is_a? arg) == false }
+    end
     true
   end
 
@@ -71,11 +83,7 @@ module Enumerable
     accum
   end
 
-  def multiply_els(array)
-    array.my_inject { |mult, elem| mult * elem }
-  end
-
-  puts multiply_els([2, 4, 5])
+  
 
   # #1. my_each
   # puts
@@ -93,11 +101,16 @@ module Enumerable
   # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
   # puts
 
-  # #4. my_all?
+  # # 4. my_all? (example test cases)
   # p [3, 5, 7, 11].my_all? { |n| n.odd? } # => true
   # p [-8, -9, -6].my_all? { |n| n < 0 } # => true
   # p [3, 5, 8, 11].my_all? { |n| n.odd? } # => false
   # p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+  # # test case required by tse reviewer
+  # p [1,2,3,4,5].my_all? # => true
+  # p [1, 2, 3].my_all?(Integer) # => true
+  # p ['dog', 'door', 'rod', 'blade'].my_all?(/d/) # => true
+  # p [1, 1, 1].my_all?(1) # => true
   # puts
 
   # #5. my_any?
@@ -131,3 +144,10 @@ module Enumerable
   # p [1,2,3,4].my_inject(10) { |accum, elem| accum + elem} # => 20
   # p [1,2,3,4].my_inject { |accum, elem| accum + elem} # => 10
 end
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
+def multiply_els(array)
+  array.my_inject { |mult, elem| mult * elem }
+end
+
+puts multiply_els([2, 4, 5])
