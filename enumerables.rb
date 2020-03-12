@@ -62,42 +62,8 @@ module Enumerable
   end
 
   def my_none?(arg = nil, &prc)
-    return true if !block_given? && arg.nil? && my_each { |elem| return false if elem == true }
-    return false unless block_given? || !arg.nil?
-
-    if block_given?
-      my_each { |elem| return false if prc.call(elem) }
-    elsif arg.class == Regexp
-      my_each { |elem| return false unless arg.match(elem).nil? }
-    elsif arg.class <= Numeric || arg.class <= String
-      my_each { |elem| return false if elem == arg }
-    else
-      my_each { |elem| return false if elem.class <= arg }
-    end
-    true
+    !my_any?(arg, &prc)
   end
-
-  # def my_none?(arg = nil)
-  #   return true if !block_given? && arg.nil? && my_each { |x| return false if x == true }
-  #   return false unless block_given? || !arg.nil?
-
-  #   if block_given?
-  #     my_each { |x| return false if yield(x) == true }
-  #   elsif arg.class == Regexp
-  #     my_each { |x| return false unless arg.match(x).nil? }
-  #   elsif arg.class <= Numeric || arg.class <= String
-  #     my_each { |x| return false if x == arg }
-  #   else
-  #     my_each { |x| return false if x.class <= arg }
-  #   end
-  #   true
-  # end
-
-  p [nil, false, nil, false].my_none? # - should be true
-  p [1, 2 ,3].my_none? # => false
-  p [1, 2 ,3].my_none?(String) # => true
-  p [1,2,3,4,5].my_none?(2) # => false
-  p [1, 2, 3].my_none?(4) # => true
 
   def my_count(arg = nil, &prc)
     count = 0
