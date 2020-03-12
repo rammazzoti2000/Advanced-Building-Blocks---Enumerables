@@ -62,7 +62,18 @@ module Enumerable
   end
 
   def my_none?(arg = nil, &prc)
-    my_each { |elem| return false if prc.call(elem) }
+    return true if !block_given? && arg.nil? && my_each { |elem| return false if elem == true }
+    return false unless block_given? || !arg.nil?
+
+    if block_given?
+      my_each { |elem| return false if prc.call(elem) }
+    elsif arg.class == Regexp
+      my_each { |elem| return false unless arg.match(elem).nil? }
+    elsif arg.class <= Numeric || arg.class <= String
+      my_each { |elem| return false if elem == arg }
+    else
+      my_each { |elem| return false if elem.class <= arg }
+    end
     true
   end
 
@@ -115,31 +126,36 @@ module Enumerable
   # p [-8, -9, -6].my_all? { |n| n < 0 } # => true
   # p [3, 5, 8, 11].my_all? { |n| n.odd? } # => false
   # p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-  # # test case required by tse reviewer
+  # # test cases required by tse reviewer
   # p [1,2,3,4,5].my_all? # => true
   # p [1, 2, 3].my_all?(Integer) # => true
   # p ['dog', 'door', 'rod', 'blade'].my_all?(/d/) # => true
   # p [1, 1, 1].my_all?(1) # => true
   # puts
 
-  # #5. my_any? (example test case)
+  # #5. my_any? (example test cases)
   # p [7, 10, 3, 5].my_any? { |n| n.even? } # => true
   # p [7, 10, 4, 5].my_any?() { |n| n.even? } # => true
   # p ["q", "r", "s", "i"].my_any? { |char| "aeiou".include?(char) } # => true
   # p [7, 11, 3, 5].my_any? { |n| n.even? } # => false
   # p ["q", "r", "s", "t"].my_any? { |char| "aeiou".include?(char) } # => false
-  # test case required by tse reviewer
+  # # test cases required by tse reviewer
   # p [1, nil, false].my_any?(1) # => true
   # p [1, nil, false].my_any?(Integer) # => true
   # p ['dog', 'door', 'rod', 'blade'].my_any?(/z/) # => false
   # p [1, 2 ,3].my_any?(1) # => true
   # puts
 
-  # #6. my_none?
+  # #6. my_none? (example test cases)
   # p [3, 5, 7, 11].my_none? { |n| n.even? } # => true
   # p ["sushi", "pizza", "burrito"].my_none? { |word| word[0] == "a" } # => true
   # p [3, 5, 4, 7, 11].my_none? { |n| n.even? } # => false
   # p ["asparagus", "sushi", "pizza", "apple", "burrito"].my_none? { |word| word[0] == "a" } # => false
+  # # test cases required by tse reviewer
+  # p [1, 2 ,3].my_none? # => false
+  # p [1, 2 ,3].my_none?(String) # => true
+  # p [1,2,3,4,5].my_none?(2) # => false
+  # p [1, 2, 3].my_none?(4) # => true
   # puts
 
   # #7. my_count
