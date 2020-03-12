@@ -77,11 +77,18 @@ module Enumerable
     true
   end
 
-  def my_count(&prc)
-    return to_enum(:my_map) unless block_given?
+  def my_count(arg = nil, &prc)
 
     count = 0
-    my_each { |elem| count += 1 if prc.call(elem) }
+    my_each do |elem|
+      if block_given?
+        count += 1 if prc.call(elem)
+      elsif !arg.nil?
+        count += 1 if elem == arg
+      else
+        count = length
+      end
+    end
     count
   end
 
@@ -158,10 +165,15 @@ module Enumerable
   # p [1, 2, 3].my_none?(4) # => true
   # puts
 
-  # #7. my_count
+  # #7. my_count (example test cases)
   # p [1,4,3,8].my_count { |n| n.even? } # => 2
   # p ["DANIEL", "JIA", "KRITI", "dave"].my_count { |s| s == s.upcase } # => 3
   # p ["daniel", "jia", "kriti", "dave"].my_count { |s| s == s.upcase } # => 0
+  # # test cases required by tse reviewer
+  # p [1, 2, 3].my_none? # => false
+  # p [1, 2 ,3].my_none?(String) # => true
+  # p [1, 2, 3, 4, 5].my_none?(2) # => false
+  # p [1, 2, 3].my_none?(4) # => true
   # puts
 
   # #8. my_map
