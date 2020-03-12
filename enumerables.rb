@@ -78,7 +78,6 @@ module Enumerable
   end
 
   def my_count(arg = nil, &prc)
-
     count = 0
     my_each do |elem|
       if block_given?
@@ -102,14 +101,19 @@ module Enumerable
     mapped
   end
 
-  def my_inject(*args)
-    return to_enum(:my_inject) unless block_given?
+  def my_inject(memo = nil, sym = nil, &prc)
+    memo = memo.to_sym if memo.is_a?(String) && !sym && !prc
 
-    elem = args.size.positive?
-    accum = elem ? args[0] : self[0]
-    self_drop = drop(elem ? 0 : 1)
-    self_drop.my_each { |num| accum = yield(accum, num) }
-    accum
+    if memo.is_a?(Symbol) && !sym
+      prc = memo.to_proc
+      memo = nil
+    end
+
+    sym = sym.to_sym if sym.is_a?(String)
+    prc = sym.to_proc if sym.is_a?(Symbol)
+
+    my_each { |elem| memo = memo.nil? ? elem : prc.yield(memo, elem) }
+    memo
   end
 
   # #1. my_each
@@ -185,6 +189,7 @@ module Enumerable
   # #9. my_inject
   # p [1,2,3,4].my_inject(10) { |accum, elem| accum + elem} # => 20
   # p [1,2,3,4].my_inject { |accum, elem| accum + elem} # => 10
+  # p [5, 1, 2].my_inject("+") # => 8
 end
 # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
@@ -192,4 +197,4 @@ def multiply_els(array)
   array.my_inject { |mult, elem| mult * elem }
 end
 
-puts multiply_els([2, 4, 5])
+puts multiply_els([2, 4, 5]) # => 40
