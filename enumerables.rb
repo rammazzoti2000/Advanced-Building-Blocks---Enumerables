@@ -45,12 +45,23 @@ module Enumerable
     true
   end
 
-  def my_any?(&prc)
-    my_each { |elem| return true if prc.call(elem) }
+  def my_any?(arg = nil, &prc)
+    return true if !block_given? && arg.nil? && my_each { |elem| return true if elem == true } && empty? == false
+    return false unless block_given? || !arg.nil?
+
+    if block_given?
+      my_each { |elem| return true if prc.call(elem) }
+    elsif arg.class == Regexp
+      my_each { |elem| return true unless arg.match(elem).nil? }
+    elsif arg.class <= Numeric || arg.class <= String
+      my_each { |elem| return true if elem == arg }
+    else
+      my_each { |elem| return true if elem.class <= arg }
+    end
     false
   end
 
-  def my_none?(&prc)
+  def my_none?(arg = nil, &prc)
     my_each { |elem| return false if prc.call(elem) }
     true
   end
@@ -83,8 +94,6 @@ module Enumerable
     accum
   end
 
-  
-
   # #1. my_each
   # puts
   # print [1, 2, 3].my_each { |elem| print (elem + 1).to_s + " "} # => 2 3 4
@@ -113,12 +122,17 @@ module Enumerable
   # p [1, 1, 1].my_all?(1) # => true
   # puts
 
-  # #5. my_any?
+  # #5. my_any? (example test case)
   # p [7, 10, 3, 5].my_any? { |n| n.even? } # => true
   # p [7, 10, 4, 5].my_any?() { |n| n.even? } # => true
   # p ["q", "r", "s", "i"].my_any? { |char| "aeiou".include?(char) } # => true
   # p [7, 11, 3, 5].my_any? { |n| n.even? } # => false
   # p ["q", "r", "s", "t"].my_any? { |char| "aeiou".include?(char) } # => false
+  # test case required by tse reviewer
+  # p [1, nil, false].my_any?(1) # => true
+  # p [1, nil, false].my_any?(Integer) # => true
+  # p ['dog', 'door', 'rod', 'blade'].my_any?(/z/) # => false
+  # p [1, 2 ,3].my_any?(1) # => true
   # puts
 
   # #6. my_none?
