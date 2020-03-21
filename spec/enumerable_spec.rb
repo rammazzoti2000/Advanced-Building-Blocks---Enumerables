@@ -57,7 +57,7 @@ RSpec.describe Enumerable do
     end
 
     it "should throw an error if given an argument" do
-      expect { array.my_each_with_index('argument') }.to raise_error(ArgumentError)
+      expect {array.my_select('argument')}.to raise_error(ArgumentError)
     end
 
   end
