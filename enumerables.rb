@@ -81,7 +81,7 @@ module Enumerable
   end
 
   def my_map(prc = nil)
-    return enum_for(:map) unless block_given?
+    return to_enum(:map) unless block_given?
 
     mapped = []
     my_each { |elem| mapped << prc.call(elem) } if block_given? && prc
