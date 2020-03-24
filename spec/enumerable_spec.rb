@@ -42,10 +42,10 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_select' do
-    arr_even = [1, 2, 3, 8]
-    arr_odd = [6, 11, 13]
-    odd = [11, 13]
-    array = [3, 5, 'A', 'B']
+    let(:arr_even) { [1, 2, 3, 8] }
+    let(:arr_odd) { [6, 11, 13] }
+    let(:odd) { [11, 13] }
+    let(:array) { [3, 5, 'A', 'B'] }
 
     it 'should return to Enumerator if no block given' do
       expect(arr_even.my_select).to be_a(Enumerator)
@@ -104,7 +104,7 @@ RSpec.describe Enumerable do
     end
 
     it 'should return false if none of the collection matches the Regex' do
-      expect(arr_regex.my_any?(/z/)).to eq(false)
+      expect(arr_regex.my_any?(/z/)).not_to eq(true)
     end
 
     it 'should return false if none of the collection matches the pattern' do
@@ -116,13 +116,13 @@ RSpec.describe Enumerable do
     end
 
     it 'if empty array is given should return false' do
-      expect(arr_empty.my_any?).to eq(false)
+      expect(arr_empty.my_any?).not_to eq(true)
     end
   end
 
   describe '#my_none?' do
     it 'should return true only if none of the collection members is true' do
-      expect(array.my_none?).to eq(false)
+      expect(array.my_none?).not_to eq(true)
     end
 
     it 'should return true if none of the collection is a member of such class' do
@@ -130,11 +130,11 @@ RSpec.describe Enumerable do
     end
 
     it 'should return true only if none of the collection matches the Regex' do
-      expect(array.my_none?(2)).to eq(false)
+      expect(array.my_none?(2)).not_to eq(true)
     end
 
     it 'should return true only if none of the collection matches the pattern' do
-      expect(array.my_none?(4)).to eq(false)
+      expect(array.my_none?(4)).not_to eq(true)
     end
 
     it 'should return true if none elements matches the block condition' do
