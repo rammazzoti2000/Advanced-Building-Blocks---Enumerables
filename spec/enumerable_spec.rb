@@ -3,7 +3,11 @@
 require './enumerables.rb'
 
 RSpec.describe Enumerable do
-  let(:array) { [1, 2, 3] }
+  let(:array) { [1, 2, 3, 4, 5] }
+  let(:arr_regex) { (%w[dog door rod blade]) }
+  let(:arr_nil) { [1, nil, false] }
+  let(:match_arr) { [1, 1, 1] }
+  let(:arr_empty) { [] }
 
   describe '#my_each' do
     it 'should return to Enumerator if no block given' do
@@ -62,4 +66,31 @@ RSpec.describe Enumerable do
       expect { array.my_select('argument') }.to raise_error(ArgumentError)
     end
   end
+
+  describe '#my_all?' do
+    it 'returns true if all of the collection matches the Regex' do
+      expect(arr_regex.my_all?(/d/)).to eq(true)
+    end
+
+    it 'returns true if at least one of the collection is not false or nil' do
+      expect(arr_nil.my_any?(1)).to eq(true)
+    end
+
+    it 'returns true if all of the collection is a member of such class' do
+      expect(array.my_all?(Integer)).to eq(true)
+    end
+
+    it 'returns true if all of the collection matches the pattern' do
+      expect(match_arr.my_all?(1)).to eq(true)
+    end
+
+    it 'when block given it should return true if all elements matches the block condition' do
+      expect(arr_regex.my_all? { |elem| elem.length >= 3 }).to eq(true)
+    end
+
+    it 'if empty array is given should return true' do
+      expect(arr_empty.my_all?).to eq(true)
+    end
+  end
+
 end
