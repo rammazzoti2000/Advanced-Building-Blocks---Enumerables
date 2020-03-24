@@ -119,4 +119,30 @@ RSpec.describe Enumerable do
     end
   end
 
+  describe '#my_none?' do
+    it 'should return true only if none of the collection members is true' do
+      expect(array.my_none?).to eq(false)
+    end
+
+    it 'should return true if none of the collection is a member of such class' do
+      expect(array.my_none?(String)).to eq(true)
+    end
+
+    it 'should return true only if none of the collection matches the Regex' do
+      expect(array.my_none?(2)).to eq(false)
+    end
+
+    it 'should return true only if none of the collection matches the pattern' do
+      expect(array.my_none?(4)).to eq(false)
+    end
+
+    it 'should return true if none elements matches the block condition' do
+      expect(arr_regex.my_none? { |elem| elem.length >= 3 }).to eq(false)
+    end
+
+    it 'if empty array is given should return true' do
+      expect(arr_empty.my_none?).to eq(true)
+    end
+  end
+
 end
