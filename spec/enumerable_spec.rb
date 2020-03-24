@@ -4,10 +4,11 @@ require './enumerables.rb'
 
 RSpec.describe Enumerable do
   let(:array) { [1, 2, 3, 4, 5] }
-  let(:arr_regex) { (%w[dog door rod blade]) }
+  let(:arr_regex) { %w[dog door rod blade] }
   let(:arr_nil) { [1, nil, false] }
   let(:match_arr) { [1, 1, 1] }
   let(:arr_empty) { [] }
+  let(:arr_count) { [1, 1, 1, 2, 3] }
 
   describe '#my_each' do
     it 'should return to Enumerator if no block given' do
@@ -145,4 +146,58 @@ RSpec.describe Enumerable do
     end
   end
 
+  describe '#count' do
+    it 'should return the number of items in enum through enumeration' do
+      expect(array.my_count).to eq(5)
+    end
+
+    it 'should count the number of items in enum that are equal to item if an argument is given' do
+      expect(arr_count.my_count(1)).to eq(3)
+    end
+
+    it 'should return number of elements that matches the block condition' do
+      expect(array.my_count(&:even?)).to eq(2)
+    end
+  end
+
+  describe '#my_map' do
+    it 'should return to Enumerator if no block given' do
+      expect(array.my_each).to be_a(Enumerator)
+    end
+
+    it 'if block given should return new array matching block conditions' do
+      expect(array.my_map { |elem| elem + 3 }).to eq([4, 5, 6, 7, 8])
+    end
+
+    it 'if both a proc and a block are given, only execute the pro' do
+      my_proc = proc { |num| num > 2 }
+      expect(array.my_map(my_proc) { |num| num > 2 }).to eq([false, false, true, true, true])
+    end
+
+    it 'should return a new array containing classes of each element in the array given' do
+      expect(arr_regex.my_map(&:class)).to eq([String, String, String, String])
+    end
+  end
+
+  describe '#my_inject' do
+    # rubocop:disable Layout/LineLength
+    it 'When a symbol is specified should combine each element of the collection by applying the symbol as a named method' do
+      expect(array.my_inject('+')).to eq(15)
+    end
+
+    it 'When a symbol and a patern are specified should combine each element of the collection by applying the symbol as a named method based on the initial patern' do
+      expect((5..10).my_inject(2, :*)).to eq(302_400)
+    end
+    # rubocop:enable Layout/LineLength
+
+    it 'when block given should return the result of the block' do
+      expect((5..10).my_inject(4) { |prod, n| prod * n }).to eq(604_800)
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'it should multiply all the elements of the array together by using #my_inject method' do
+      expect(multiply_els([2, 4, 5])).to eql(40)
+    end
+  end
 end
