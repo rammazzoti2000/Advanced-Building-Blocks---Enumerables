@@ -8,6 +8,7 @@ module Enumerable
       is_a?(Range) ? yield(min + i) : yield(self[i])
       i += 1
     end
+    self
   end
 
   def my_each_with_index
@@ -80,7 +81,7 @@ module Enumerable
   end
 
   def my_map(prc = nil)
-    return enum_for(:map) unless block_given?
+    return to_enum(:my_map) unless block_given?
 
     mapped = []
     my_each { |elem| mapped << prc.call(elem) } if block_given? && prc
