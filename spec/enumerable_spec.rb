@@ -84,12 +84,38 @@ RSpec.describe Enumerable do
       expect(match_arr.my_all?(1)).to eq(true)
     end
 
-    it 'when block given it should return true if all elements matches the block condition' do
+    it 'should return true if all elements matches the block condition' do
       expect(arr_regex.my_all? { |elem| elem.length >= 3 }).to eq(true)
     end
 
     it 'if empty array is given should return true' do
       expect(arr_empty.my_all?).to eq(true)
+    end
+  end
+
+  describe '#my_any?' do
+    it 'should return true if at least one of the collection is not false or nil' do
+      expect(arr_nil.my_any?(1)).to eq(true)
+    end
+
+    it 'should return true if at least one of the collection is a member of such class' do
+      expect(arr_nil.my_any?(Integer)).to eq(true)
+    end
+
+    it 'should return false if none of the collection matches the Regex' do
+      expect(arr_regex.my_any?(/z/)).to eq(false)
+    end
+
+    it 'should return false if none of the collection matches the pattern' do
+      expect(array.my_any?(1)).to eq(true)
+    end
+
+    it 'should return true if any elements matches the block condition' do
+      expect(arr_regex.my_any? { |elem| elem.length >= 3 }).to eq(true)
+    end
+
+    it 'if empty array is given should return false' do
+      expect(arr_empty.my_any?).to eq(false)
     end
   end
 
