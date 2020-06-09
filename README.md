@@ -57,6 +57,8 @@ Advanced-Building-Blocks---Enumerables"><strong>Explore the docs »</strong></a>
 
 [![Product Name Screen Shot][product-screenshot]](https://repl.it/@AlexandruBangau/enumerables)
 
+Own implementation of Ruby’s enumerable methods
+
 This is the first project of the Microverse Ruby Module
 
 This is also the Assignment_2 of the [Odin project curriculum](https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks)
@@ -70,12 +72,40 @@ To test the code you need to have ruby installed in your computer or execute it 
 This project was built using these technologies.
 * Ruby
 * Rubocop
-* VsCode
+* Rspec
+* Atom :atom:
+
+## Usage
+
+If you want to use the code you need to have ruby installed in your computer and copy the main.rb file from this project in your project or open an ``irb`` console and import it like this
+
+```require_relative main.rb```
+
+You can now use my Enumerable methods like the ruby Enumerable methods:
+
+- ``my_each`` == ``each``
+- ``my_each_with_index`` == ``each_with_index``
+- ``my_select`` == ``select``
+- ``my_count`` == ``count``
+- ``my_all`` == ``all``
+- ``my_any`` == ``any``
+- ``my_none`` == ``none``
+- ``my_map`` == ``map``
+- ``my_inject`` == ``inject``
 
 <!-- LIVE VERSION -->
 ## Live version
 
 You can see it working [here](https://repl.it/@AlexandruBangau/enumerables)
+
+<!-- AUTOMATED TEST -->
+## Automated Test
+
+To run the test clone or download the project, open a terminal in the project directory and run the following:
+
+```ruby
+rspec spec/test_enumerables
+```
 
 <!-- CONTACT -->
 ## Contributors
@@ -85,6 +115,17 @@ You can see it working [here](https://repl.it/@AlexandruBangau/enumerables)
 - LinkedIn: [Alexandru Bangau](https://www.linkedin.com/in/alexandru-bangau/)
 - GitHub: [@rammazzoti2000](https://github.com/rammazzoti2000)
 - E-mail: bangau.alexandru@gmail.com
+
+<!-- CONTRIBUTING -->
+## :handshake: Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/rammazzoti2000/Advanced-Building-Blocks---Enumerables/issues).
+
+## Show your support
+
+Give a :star: if you like this project!
 
 
 <!-- ACKNOWLEDGEMENTS -->
